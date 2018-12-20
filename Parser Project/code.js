@@ -140,7 +140,7 @@ function parseLine(line,n,parentUL,parentAccess)
                }
             }
             else if (key.trim() ==";"){count++;return;}
-            else{alert("jjjajj");}
+            else{alert("else");}
         }
         else if(note.trim() ==="IDENTIFIER") 
         {
@@ -192,7 +192,6 @@ function parseLine(line,n,parentUL,parentAccess)
                 {
                     count++;
                     parseLine(allsen[count],count,parentUL,parentAccess);
-                    alert(parentAccess.ops)
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
                     var newUl = TnewUl.getElementsByTagName('ul')[0];
                     var modify= newUl.getElementsByTagName("li")[0];
