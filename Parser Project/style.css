@@ -1,0 +1,233 @@
+/* -- body -- */
+body
+{
+	background: #e9ecef;
+}
+/* -- end body -- */
+/* -- start -- */
+top
+{
+	margin-top:2%;
+	margin-bottom:2%;
+	background: url(wp1.jpg) no-repeat;
+    background-size: cover;
+	display: block;
+	overflow: hidden;
+	border-radius: 9px;
+	padding-left: 2%;
+	margin-left: 5%;
+	max-width: 90%;
+	padding-top: 7%;
+	padding-bottom: 7%;
+	background-position-y: 45%;
+}
+
+starting
+{
+	background: rgba(255,255,255,0.9);
+	padding:5%;
+	border-radius: 9px;
+	min-width: 35%;
+	
+}
+top > *{float: left;}
+starting > *{margin-bottom:15px;margin-top:15px;display: block;}
+Element{position: relative;}
+fakefile 
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	z-index: 1;
+}
+.infile
+{
+	position: relative;
+	text-align: right;
+	-moz-opacity:0 ;
+	filter:alpha(opacity: 0);
+	opacity: 0;
+	z-index: 2;
+	cursor:pointer;
+}
+.pinimg
+{
+	width: 30px;
+	background: white;
+	border-radius: 9px;
+	padding: 4px;
+	margin-top: 0px;
+	margin-left: 10px;
+	-webkit-transition:background 0.25s ease-out;
+	transition:background 0.25s ease-out;
+}
+.submit-button:hover::before, .submit-button:focus::before, .submit-button:active::before {
+    -webkit-transform: scaleY(0);
+    transform: scaleY(0);
+}
+.submit-button::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #e1e1e1;
+    -webkit-transform: scaleY(1);
+    transform: scaleY(1);
+    -webkit-transform-origin: 50%;
+    transform-origin: 50%;
+    -webkit-transition-property: transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    border-radius: 5px;
+}
+
+.submit-button:hover, .submit-button:focus, .submit-button:active 
+{
+    color: white;
+}
+
+.submit-button 
+{
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    box-shadow:  0px 0px 15px 1px rgba(18,16,64,1);
+    position: relative;
+    background: #15242b;
+    -webkit-transition-property: color;
+    c color;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    padding:10px;
+    border:none;
+    border-radius: 5px;
+	-webkit-transition:font 1s;
+}
+.submit-button:active {
+	background: #2098D1;
+}
+
+/* -- end of start --*/
+
+/* -- Output -- */
+output
+{
+	display: block;
+	background:white;
+	border-radius: 9px;
+	margin-left: 5%;
+	max-width: 92%;
+    position: absolute;
+    padding-bottom: 10%;
+    min-width: 92%;
+}
+
+h4
+{
+	font-style: italic;
+	border-bottom: 2px #e9ecef solid;
+	padding-left: 5%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	overflow: hidden;
+	
+}
+op
+{
+	padding-left: 2%;
+	padding-top: 2%;
+}
+/* -- end of Output -- */
+
+/* -- Tree -- */
+.tree ul {
+    padding-top: 20px; 
+    position: relative;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.tree li {
+    float: left; text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 0px 0 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+
+.tree li::before, .tree li::after{
+    content: '';
+    position: absolute; top: 0; right: 50%;
+    border-top: 1px solid #ccc;
+    width: 50%; height: 20px;
+}
+.tree li::after{
+    right: auto; left: 50%;
+    border-left: 1px solid #ccc;
+}
+
+.tree li:only-child::after, .tree li:only-child::before {
+    display: none;
+}
+
+.tree li:only-child{ padding-top: 0;}
+
+.tree li:first-child::before, .tree li:last-child::after{
+    border: 0 none;
+}
+.tree li:last-child::before{
+    border-right: 1px solid #ccc;
+    border-radius: 0 5px 0 0;
+    -webkit-border-radius: 0 5px 0 0;
+    -moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+    border-radius: 5px 0 0 0;
+    -webkit-border-radius: 5px 0 0 0;
+    -moz-border-radius: 5px 0 0 0;
+}
+.tree ul ul::before{
+    content: '';
+    position: absolute; top: 0; left: 50%;
+    border-left: 1px solid #ccc;
+    width: 0; height: 20px;
+}
+.tree li div{
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    text-decoration: none;
+    color: #666;
+    font-family: arial, verdana, tahoma;
+    font-size: 11px;
+    display: inline-block;
+
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+}
+.tree li div:hover, .tree li div:hover+ul li div {
+    background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+}
+.tree li div:hover+ul li::after, 
+.tree li div:hover+ul li::before, 
+.tree li div:hover+ul::before, 
+.tree li div:hover+ul ul::before{
+    border-color:  #94a0b4;
+}
+
+/* -- end of Tree -- */

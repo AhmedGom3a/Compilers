@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Parser Project</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="normalize.css">
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<top>
+			<starting>
+				Please locate input file: 
+				<Element>
+					<input id="this" class="infile" type="file" accept=".txt"/>
+					<fakefile>
+						<input id="fakeinfile" style="border:none;background-color:inherit;">
+						<img src="clip.png" class="pinimg" id="pinimg"/>
+					</fakefile>
+				</Element>
+				<button id="submit" class="submit-button">Submit</button>
+			</starting>
+		</top>	
+		<output id="output">
+			<h4>Output</h4>
+			<op>
+                <div id="tree" class="tree">
+                    <ul name="0">
+<!--
+                        <li>
+                            <div>  Main</div>
+                            <ul>
+                                <li>
+                                    <div>Sub-1</div>
+                                     <ul>
+                                        <li>
+                                            <div>Sub-2-1</div>
+                                        </li>
+                                        <li>
+                                            <div>Sub-2-2</div>
+                                        </li>
+                                    </ul>  
+                                </li>
+                                <li>
+                                    <div>
+                                    Sub-2
+                                    </div>
+                                    <ul>
+                                        <li>
+                                            <div>Sub-2-1</div>
+                                        </li>
+                                        <li>
+                                            <div>Sub-2-2</div>
+                                        </li>
+                                    </ul>  
+                                </li>
+                            </ul>
+                        </li>
+-->
+                        
+                    </ul>
+                </div>
+            </op>
+		</output>
+        <test id="level1">
+            <div id="b2"><!--0 -->
+                <div id="3">me</div><!--1 --> <!--0 -->
+                <div id="3">bro</div><!--2 --> <!--1 -->
+                <div id="3">sis</div><!--3 --> <!--2 -->
+            </div>
+            <div id="b2">uncle</div><!--4 --> <!--1 -->
+            <div id="b2">aunt</div><!-- 5--> <!--2 -->
+        </test>
+		<script src="code.js"></script>
+	</body>
+</html>
