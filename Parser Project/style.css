@@ -229,5 +229,7 @@ op
 .tree li div:hover+ul ul::before{
     border-color:  #94a0b4;
 }
+#mainul>li>div {border: 2px solid #DDD;background: #15242b;color: white;font-style: italic;}
+#mainul>li>div:hover {background: #c8e4f8; color: #000; border: 1px solid #94a0b4;}
 
 /* -- end of Tree -- */

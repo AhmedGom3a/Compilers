@@ -7,7 +7,8 @@ var submit = document.getElementById("submit");
 var allsen = new Array ();
 var count=0;
 var ulhome=tree.getElementsByTagName("ul")[0];
-var globalacces={ifs:0,assigns:0,reprats:0,kids:0,ops:0}
+var globalacces={ifs:0,assigns:0,reprats:0,kids:0,ops:0,read:0,write:0}
+var grand1acces={ifs:0,assigns:0,reprats:0,kids:0,ops:0,read:0,write:0}
 // Reset Every Thing on load
 window.onload=function(){infile.value="";fakeinfile.value="";};
 
@@ -37,13 +38,13 @@ function GetNote(line,note,key)
      return details[1]; 
 }
 // Parse each line 
-function parseLine(line,n,parentUL,parentAccess)
+function parseLine(line,n,parentUL,parentAccess,grandAccess)
 {
     if(n<allsen.length)
     {
         
         var key=GetKey(line),
-        note=GetNote(line),pastKey,pastnote,nextKey,nextnote,myAccess={ifs:0,assigns:0,repeats:0,kids:0,ops:0};
+        note=GetNote(line),pastKey,pastnote,nextKey,nextnote,myAccess={ifs:0,assigns:0,repeats:0,kids:0,ops:0,read:0,write:0};
         if(n>0)
         {
             pastKey=GetKey(allsen[count-1]);
@@ -59,66 +60,106 @@ function parseLine(line,n,parentUL,parentAccess)
         if     (note.trim() === "COMMENT"){count++;return;}
         else if(note.trim() ==="RESERVED_KEYWORD") 
         {
-            if(key.trim() ==="read"||key.trim() ==="write")
+               if(key.trim()=="read") 
             {
-             
-                count++;   
-                parseLine(allsen[count],count,parentUL);
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"read\"><div> read</div><ul id=\"dummy\"></ul></li>";
+                var TnewUl =parentUL.querySelectorAll('#read')[parentAccess.read];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                count++;
+                while (GetKey(allsen[count-1]).trim()!=";")
+                {
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    parseLine(allsen[count],count,newUl,myAccess,parentAccess);
+                    myAccess.kids++;
+                }
+                console.log("leaving read");
+                count--;
                 parentAccess.kids++;
+                parentAccess.read++;
+                grandAccess.read++;
                 return;
+            }
+            else if(key.trim()=="write")
+            {
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"write\"><div> write</div><ul id=\"dummy\"></ul></li>";
+                var TnewUl =parentUL.querySelectorAll('#write')[parentAccess.write];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                count++;
+                while (GetKey(allsen[count-1]).trim()!=";")
+                {
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    parseLine(allsen[count],count,newUl,myAccess,parentAccess);
+                    myAccess.kids++;
+                }
+                console.log("leaving write");
+                count--;
+                parentAccess.kids++;
+                parentAccess.write++;
+                grandAccess.write++;
+                return;   
             }
             else if (key.trim() ==="if")
             {   
 
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"ifparent\"><div> "+key+"</div><ul></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"ifparent\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
                 count++;
                 var TnewUl = parentUL.querySelectorAll('#ifparent')[parentAccess.ifs];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];
-                parseLine(allsen[count],count,newUl,myAccess);
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                 while (GetKey(allsen[count]).trim()!="end")
                 {
-                    parseLine(allsen[count],count,newUl,myAccess);
+                    parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                 }
                 parentAccess.ifs++;
                 parentAccess.kids++;
+                grandAccess.ifs++;
                 return;
             }
             else if (key.trim() ==="else"){count++;return;}
             else if (key.trim() ==="then"){count++;return;}
             else if (key.trim() ==="repeat")
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"repeat\"><div> "+key+"</div><ul></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"repeat\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
                 count++;
                 var TnewUl = parentUL.querySelectorAll('#repeat')[parentAccess.repeats];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                 while (GetKey(allsen[count]).trim()!="until")
                 {
-                    parseLine(allsen[count],count,newUl,myAccess);
+                    parseLine(allsen[count],count,newUl,myAccess,grandAccess);
                 }
                 parseLine(allsen[count],count,newUl,myAccess);
                 parentAccess.repeats++;
+                grandAccess.repeats++;
                 parentAccess.kids++;
                 return;
             }
-            else if (key.trim() ==="until"){count++;parseLine(allsen[count],count,parentUL,parentAccess);return;}
+            else if (key.trim() ==="until"){count++;parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);return;}
             else if (key.trim() ==="end"){count++;return;}
         }
         else if(note.trim() ==="SPECIAL_SYMBOL") 
         {
-            if     (key.trim() =="+"||key.trim() =="-"||key.trim() =="*"||key.trim() =="/")
+            if(key.trim() =="+"||key.trim() =="-"||key.trim() =="*"||key.trim() =="/")
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"math\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"math\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
                 var newUl =parentUL.querySelectorAll('#math ul')[0];
-                newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li><li id=\"opkid\" ></li>";
+                newUl.setAttribute("id","ok");
                 count++;
-                parseLine(allsen[count],count,newUl);
+                newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                myAccess.kids++;
+                while (GetKey(allsen[count]).trim()!=";")
+                {
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    parseLine(allsen[count],count,newUl,myAccess,parentAccess);
+                    myAccess.kids++;
+                }
                 parentAccess.kids++;
                 return;
             }
             else if (key.trim() ==">" || key.trim() =="<" || key.trim() =="=")
             {
-                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"cond\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul></ul></li>";
+                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"cond\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
                     var newUl =parentUL.querySelectorAll('#cond ul')[0];
+                    newUl.setAttribute("id","ok");
                     newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li><li id=\"opkid\" ></li>";
                     count++;
                     parseLine(allsen[count],count,newUl);
@@ -129,47 +170,52 @@ function parseLine(line,n,parentUL,parentAccess)
             {
                if(pastnote.trim() ==="IDENTIFIER") 
                {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"assign\"><div> Assign ["+pastKey+"] </div><ul></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"assign\"><div> Assign ["+pastKey+"] </div><ul id=\"dummy\"></ul></li>";
                 var TnewUl = parentUL.querySelectorAll('#assign')[parentAccess.assigns];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                 count++;
-                parseLine(allsen[count],count,newUl,myAccess);
+                parseLine(allsen[count],count,newUl,myAccess,parentAccess);
+                grandAccess.assigns++;
                 parentAccess.assigns++;
                 parentAccess.kids++;
                 return;
                }
             }
             else if (key.trim() ==";"){count++;return;}
-            else{alert("jjjajj");}
+            else{console.log("ambigious");count++;return;}
         }
         else if(note.trim() ==="IDENTIFIER") 
         {
            
-            if(pastKey=="read" || pastKey=="write")
+            if(pastKey=="read"||pastKey=="write") 
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\""+pastKey+"\"><div> "+pastKey+" ("+key+") </div><ul></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li><div> &nbsp&nbsp&nbsp&nbsp"+key+"&nbsp&nbsp&nbsp</div><ul id=\"dummy\"></ul></li>";
                 count++;
+                parentAccess.kids++;
                 return;
             }
             else if(pastKey=="if")
             { 
                 count++;
-                parseLine(allsen[count],count,parentUL,parentAccess);
+                parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                 parentUL=parentUL.getElementsByTagName("li")[0].getElementsByTagName("ul")[0];
+                parentUL.setAttribute("id","ok");
                 var modify= parentUL.getElementsByTagName("li")[0];
                 modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                 parentAccess.ops++;
+                 
                 return;
             }
             else if(pastKey=="until")
             { 
                 count++;
-                parseLine(allsen[count],count,parentUL,parentAccess);
+                parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                 var TnewUl = parentUL.querySelectorAll('#cond')[parentAccess.ops];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                 var modify= newUl.getElementsByTagName("li")[0];
                 modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                 parentAccess.ops++;
+                 
                 return;
             }
             else if(pastKey=="<"||pastKey=="="||pastKey==">")
@@ -181,28 +227,40 @@ function parseLine(line,n,parentUL,parentAccess)
             }
             else if(pastKey=="+"||pastKey=="/"||pastKey=="-"||pastKey=="*")
                 {
-                    var modify= parentUL.getElementsByTagName("li")[1];
+                    var modify= parentUL.getElementsByTagName("li")[parentAccess.kids];
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     count++;
                     return;     
                 }
-            else if (pastKey==":=")
-            {
-                if(nextKey.trim()=="+"||nextKey=="/"||nextKey=="-"||nextKey=="*")
+            if(pastKey!=":=" && nextKey=="+"||nextKey=="/"||nextKey=="-"||nextKey=="*")
                 {
                     count++;
-                    parseLine(allsen[count],count,parentUL,parentAccess);
-                    alert(parentAccess.ops)
+                    parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
-                    var newUl = TnewUl.getElementsByTagName('ul')[0];
+                    var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                     var modify= newUl.getElementsByTagName("li")[0];
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     parentAccess.ops++;
+                     
+                    return;
+                }
+            else if (pastKey==":=")
+            {
+                if(nextKey=="+"||nextKey=="/"||nextKey=="-"||nextKey=="*")
+                {
+                    count++;
+                    parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
+                    var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
+                    var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                    var modify= newUl.getElementsByTagName("li")[0];
+                    modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
+                    parentAccess.ops++;
+                     
                     return;
                 }
                 else
                 {
-                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"num\"><div> Const ("+key+") </div><ul></ul></li>";
+                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"num\"><div> Const ("+key+") </div><ul id=\"dummy\"></ul></li>";
                     count++;
                     return;
                 }
@@ -210,7 +268,7 @@ function parseLine(line,n,parentUL,parentAccess)
             else
             {
                 count++;
-                parseLine(allsen[count],count,parentUL,parentAccess);  
+                parseLine(allsen[count],count,parentUL,parentAccess,grandAccess); 
                 return;
             }
         }
@@ -219,22 +277,25 @@ function parseLine(line,n,parentUL,parentAccess)
             if(pastKey=="if")
             {
                 count++;
-                parseLine(allsen[count],count,parentUL,parentAccess);
+                parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                 parentUL=parentUL.getElementsByTagName("li")[0].getElementsByTagName("ul")[0];
+                parentUL.setAttribute("id","ok");
                 var modify= parentUL.getElementsByTagName("li")[0];
                 modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                 parentAccess.ops++;
+                 
                 return;
             }
             else if(pastKey=="until")
             { 
                 count++;
-                parseLine(allsen[count],count,parentUL,parentAccess);
+                parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                 var TnewUl = parentUL.querySelectorAll('#cond')[parentAccess.ops];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                 var modify= newUl.getElementsByTagName("li")[0];
                 modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                 parentAccess.ops++;
+                 
                 return;
             }
             else if(pastKey=="<"||pastKey=="="||pastKey==">")
@@ -256,17 +317,18 @@ function parseLine(line,n,parentUL,parentAccess)
                 if(nextKey=="+"||nextKey=="/"||nextKey=="-"||nextKey=="*")
                 {
                     count++;
-                    parseLine(allsen[count],count,parentUL,parentAccess);
+                    parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
-                    var newUl = TnewUl.getElementsByTagName('ul')[0];
+                    var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                     var modify= newUl.getElementsByTagName("li")[0];
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     parentAccess.ops++;
+                     
                     return;
                 }
                 else
                 {
-                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"num\"><div> Const ("+key+") </div><ul></ul></li>";
+                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"num\"><div> Const ("+key+") </div><ul id=\"dummy\"></ul></li>";
                     count++;
                     return;
                 }
@@ -281,7 +343,6 @@ function parseLine(line,n,parentUL,parentAccess)
     
 }
 
-
 // Read text file and save all lines to an array
 function readSingleFile(e) {
     submit.onclick = function() 
@@ -295,16 +356,20 @@ function readSingleFile(e) {
               var contents = e.target.result;
               allsen = contents.split('\n');
               while(count<allsen.length){
-              parseLine(allsen[count],count,ulhome,globalacces);
+              parseLine(allsen[count],count,ulhome,globalacces,grand1acces);
               }
               var uls = document.getElementsByTagName("ul");
+              for(var i = 0; i < uls.length; i++)
+              {
+                   if(uls[i].getAttribute("id")=="dummy"){uls[i].parentElement.removeChild(uls[i]);}
+              }
+              uls = document.getElementsByTagName("li");
               for(var i = 0; i < uls.length; i++)
               {
                    if(uls[i].innerHTML == ""){uls[i].parentElement.removeChild(uls[i]);}
               }
           };
          reader.readAsText(file);
-        var uls=document.querySelectorAll("ul");
         
     };
    
