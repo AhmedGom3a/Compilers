@@ -1,65 +1,65 @@
 /* -- body -- */
 body
 {
-	background: #e9ecef;
+    background: #e9ecef;
 }
 /* -- end body -- */
 /* -- start -- */
 top
 {
-	margin-top:2%;
-	margin-bottom:2%;
-	background: url(wp1.jpg) no-repeat;
+    margin-top:2%;
+    margin-bottom:2%;
+    background: url(wp1.jpg) no-repeat;
     background-size: cover;
-	display: block;
-	overflow: hidden;
-	border-radius: 9px;
-	padding-left: 2%;
-	margin-left: 5%;
-	max-width: 90%;
-	padding-top: 7%;
-	padding-bottom: 7%;
-	background-position-y: 45%;
+    display: block;
+    overflow: hidden;
+    border-radius: 9px;
+    padding-left: 2%;
+    margin-left: 5%;
+    max-width: 90%;
+    padding-top: 7%;
+    padding-bottom: 7%;
+    background-position-y: 45%;
 }
 
 starting
 {
-	background: rgba(255,255,255,0.9);
-	padding:5%;
-	border-radius: 9px;
-	min-width: 35%;
-	
+    background: rgba(255,255,255,0.9);
+    padding:5%;
+    border-radius: 9px;
+    min-width: 35%;
+    
 }
 top > *{float: left;}
 starting > *{margin-bottom:15px;margin-top:15px;display: block;}
 Element{position: relative;}
 fakefile 
 {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
 }
 .infile
 {
-	position: relative;
-	text-align: right;
-	-moz-opacity:0 ;
-	filter:alpha(opacity: 0);
-	opacity: 0;
-	z-index: 2;
-	cursor:pointer;
+    position: relative;
+    text-align: right;
+    -moz-opacity:0 ;
+    filter:alpha(opacity: 0);
+    opacity: 0;
+    z-index: 2;
+    cursor:pointer;
 }
 .pinimg
 {
-	width: 30px;
-	background: white;
-	border-radius: 9px;
-	padding: 4px;
-	margin-top: 0px;
-	margin-left: 10px;
-	-webkit-transition:background 0.25s ease-out;
-	transition:background 0.25s ease-out;
+    width: 30px;
+    background: white;
+    border-radius: 9px;
+    padding: 4px;
+    margin-top: 0px;
+    margin-left: 10px;
+    -webkit-transition:background 0.25s ease-out;
+    transition:background 0.25s ease-out;
 }
 .submit-button:hover::before, .submit-button:focus::before, .submit-button:active::before {
     -webkit-transform: scaleY(0);
@@ -108,10 +108,10 @@ fakefile
     padding:10px;
     border:none;
     border-radius: 5px;
-	-webkit-transition:font 1s;
+    -webkit-transition:font 1s;
 }
 .submit-button:active {
-	background: #2098D1;
+    background: #2098D1;
 }
 
 /* -- end of start --*/
@@ -119,11 +119,11 @@ fakefile
 /* -- Output -- */
 output
 {
-	display: block;
-	background:white;
-	border-radius: 9px;
-	margin-left: 5%;
-	max-width: 92%;
+    display: block;
+    background:white;
+    border-radius: 9px;
+    margin-left: 5%;
+    max-width: 92%;
     position: absolute;
     padding-bottom: 10%;
     min-width: 92%;
@@ -131,18 +131,18 @@ output
 
 h4
 {
-	font-style: italic;
-	border-bottom: 2px #e9ecef solid;
-	padding-left: 5%;
-	padding-top: 2%;
-	padding-bottom: 2%;
-	overflow: hidden;
-	
+    font-style: italic;
+    border-bottom: 2px #e9ecef solid;
+    padding-left: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    overflow: hidden;
+    
 }
 op
 {
-	padding-left: 2%;
-	padding-top: 2%;
+    padding-left: 2%;
+    padding-top: 2%;
 }
 /* -- end of Output -- */
 
