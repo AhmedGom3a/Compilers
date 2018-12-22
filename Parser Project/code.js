@@ -62,13 +62,15 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
         {
                if(key.trim()=="read") 
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"read\"><div> read</div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"read\" class=\"dummy\" ><div> read</div><ul id=\"dummy\" ></ul></li>";
                 var TnewUl =parentUL.querySelectorAll('#read')[parentAccess.read];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 count++;
                 while (GetKey(allsen[count-1]).trim()!=";")
                 {
-                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" class=\"dummy\" ></li>";
                     parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                     myAccess.kids++;
                 }
@@ -81,13 +83,15 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             }
             else if(key.trim()=="write")
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"write\"><div> write</div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"write\" class=\"dummy\"><div> write</div><ul id=\"dummy\"></ul></li>";
                 var TnewUl =parentUL.querySelectorAll('#write')[parentAccess.write];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                
+                newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 count++;
                 while (GetKey(allsen[count-1]).trim()!=";")
                 {
-                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" class=\"dummy\"></li>";
                     parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                     myAccess.kids++;
                 }
@@ -101,10 +105,12 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if (key.trim() ==="if")
             {   
 
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"ifparent\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"ifparent\" class=\"dummy\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
                 count++;
                 var TnewUl = parentUL.querySelectorAll('#ifparent')[parentAccess.ifs];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];
+                newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                 while (GetKey(allsen[count]).trim()!="end")
                 {
@@ -119,10 +125,12 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if (key.trim() ==="then"){count++;return;}
             else if (key.trim() ==="repeat")
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"repeat\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"repeat\" class=\"dummy\"><div> "+key+"</div><ul id=\"dummy\"></ul></li>";
                 count++;
                 var TnewUl = parentUL.querySelectorAll('#repeat')[parentAccess.repeats];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 
+                newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 while (GetKey(allsen[count]).trim()!="until")
                 {
                     parseLine(allsen[count],count,newUl,myAccess,grandAccess);
@@ -140,15 +148,16 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
         {
             if(key.trim() =="+"||key.trim() =="-"||key.trim() =="*"||key.trim() =="/")
             {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"math\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"math\" class=\"dummy\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
                 var newUl =parentUL.querySelectorAll('#math ul')[0];
                 newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 count++;
-                newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" class=\"dummy\"></li>";
                 myAccess.kids++;
                 while (GetKey(allsen[count]).trim()!=";")
                 {
-                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li>";
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" class=\"dummy\"></li>";
                     parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                     myAccess.kids++;
                 }
@@ -157,10 +166,11 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             }
             else if (key.trim() ==">" || key.trim() =="<" || key.trim() =="=")
             {
-                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"cond\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
+                    parentUL.innerHTML=parentUL.innerHTML+"<li id=\"cond\" class=\"dummy\"><div> &nbsp&nbsp&nbsp OP("+key+ ")&nbsp&nbsp&nbsp </div><ul id=\"dummy\"></ul></li>";
                     var newUl =parentUL.querySelectorAll('#cond ul')[0];
                     newUl.setAttribute("id","ok");
-                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" ></li><li id=\"opkid\" ></li>";
+                    newUl.parentElement.setAttribute("class","ok");
+                    newUl.innerHTML=newUl.innerHTML+"<li id=\"opkid\" class=\"dummy\"> <li id=\"opkid\" class=\"dummy\">";
                     count++;
                     parseLine(allsen[count],count,newUl);
                     parentAccess.kids++;
@@ -170,9 +180,11 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             {
                if(pastnote.trim() ==="IDENTIFIER") 
                {
-                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"assign\"><div> Assign ["+pastKey+"] </div><ul id=\"dummy\"></ul></li>";
+                parentUL.innerHTML=parentUL.innerHTML+"<li id=\"assign\" class=\"dummy\" ><div> Assign ["+pastKey+"] </div><ul id=\"dummy\"></ul></li>";
                 var TnewUl = parentUL.querySelectorAll('#assign')[parentAccess.assigns];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 
+                newUl.setAttribute("id","ok");
+                newUl.parentElement.setAttribute("class","ok");
                 count++;
                 parseLine(allsen[count],count,newUl,myAccess,parentAccess);
                 grandAccess.assigns++;
@@ -201,6 +213,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                 parentUL=parentUL.getElementsByTagName("li")[0].getElementsByTagName("ul")[0];
                 parentUL.setAttribute("id","ok");
                 var modify= parentUL.getElementsByTagName("li")[0];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                 parentAccess.ops++;
                  
@@ -211,8 +224,10 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                 count++;
                 parseLine(allsen[count],count,parentUL,parentAccess,grandAccess);
                 var TnewUl = parentUL.querySelectorAll('#cond')[parentAccess.ops];
-                var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
+                var newUl = TnewUl.getElementsByTagName('ul')[0];                 
+                newUl.setAttribute("id","ok");
                 var modify= newUl.getElementsByTagName("li")[0];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                 parentAccess.ops++;
                  
@@ -221,6 +236,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if(pastKey=="<"||pastKey=="="||pastKey==">")
             {
                 var modify= parentUL.getElementsByTagName("li")[1];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                 count++;
                 return;
@@ -228,6 +244,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if(pastKey=="+"||pastKey=="/"||pastKey=="-"||pastKey=="*")
                 {
                     var modify= parentUL.getElementsByTagName("li")[parentAccess.kids];
+                    modify.setAttribute("class","ok");
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     count++;
                     return;     
@@ -239,6 +256,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
                     var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                     var modify= newUl.getElementsByTagName("li")[0];
+                    modify.setAttribute("class","ok");
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     parentAccess.ops++;
                      
@@ -253,6 +271,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
                     var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                     var modify= newUl.getElementsByTagName("li")[0];
+                    modify.setAttribute("class","ok");
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     parentAccess.ops++;
                      
@@ -281,6 +300,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                 parentUL=parentUL.getElementsByTagName("li")[0].getElementsByTagName("ul")[0];
                 parentUL.setAttribute("id","ok");
                 var modify= parentUL.getElementsByTagName("li")[0];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                 parentAccess.ops++;
                  
@@ -293,6 +313,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                 var TnewUl = parentUL.querySelectorAll('#cond')[parentAccess.ops];
                 var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                 var modify= newUl.getElementsByTagName("li")[0];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                 parentAccess.ops++;
                  
@@ -301,6 +322,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if(pastKey=="<"||pastKey=="="||pastKey==">")
             {
                 var modify= parentUL.getElementsByTagName("li")[1];
+                modify.setAttribute("class","ok");
                 modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                 count++;
                 return;
@@ -308,6 +330,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
             else if(pastKey=="+"||pastKey=="/"||pastKey=="-"||pastKey=="*")
                 {
                     var modify= parentUL.getElementsByTagName("li")[1];
+                    modify.setAttribute("class","ok");
                     modify.innerHTML=modify.innerHTML+"<div> const ("+key+") </div>";
                     count++;
                     return;     
@@ -321,6 +344,7 @@ function parseLine(line,n,parentUL,parentAccess,grandAccess)
                     var TnewUl = parentUL.querySelectorAll('#math')[parentAccess.ops];
                     var newUl = TnewUl.getElementsByTagName('ul')[0];                 newUl.setAttribute("id","ok");
                     var modify= newUl.getElementsByTagName("li")[0];
+                    modify.setAttribute("class","ok");
                     modify.innerHTML=modify.innerHTML+"<div> id ("+key+") </div>";
                     parentAccess.ops++;
                      
@@ -366,7 +390,26 @@ function readSingleFile(e) {
               uls = document.getElementsByTagName("li");
               for(var i = 0; i < uls.length; i++)
               {
-                   if(uls[i].innerHTML == ""){uls[i].parentElement.removeChild(uls[i]);}
+                   if(uls[i].getAttribute("class")=="dummy")
+                   {
+                    var temp=uls[i].parentElement;
+                    for(var j=0;j<temp.childElementCount;j++)
+                    {
+                        if (temp.childNodes[j].getAttribute("class")=="dummy"){temp.removeChild(temp.childNodes[j]);}
+                    }
+                   }
+              }
+              uls = document.getElementsByTagName("li");
+              for(var i = 0; i < uls.length; i++)
+              {
+                   if(uls[i].getAttribute("class")=="dummy")
+                   {
+                    var temp=uls[i].parentElement;
+                    for(var j=0;j<temp.childElementCount;j++)
+                    {
+                        if (temp.childNodes[j].getAttribute("class")=="dummy"){temp.removeChild(temp.childNodes[j]);}
+                    }
+                   }
               }
           };
          reader.readAsText(file);

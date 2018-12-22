@@ -231,5 +231,7 @@ op
 }
 #mainul>li>div {border: 2px solid #DDD;background: #15242b;color: white;font-style: italic;}
 #mainul>li>div:hover {background: #c8e4f8; color: #000; border: 1px solid #94a0b4;}
+#program>div{font-family: " comic sans MS";font-weight: bold;background: #DDD;letter-spacing: 3px;}
+.dummy,.dummy::after,.dummy::before{display: none;}
 
 /* -- end of Tree -- */
