@@ -7,8 +7,8 @@ var submit = document.getElementById("submit");
 var allsen = new Array ();
 var count=0;
 var ulhome=tree.getElementsByTagName("ul")[0];
-var globalacces={ifs:0,assigns:0,reprats:0,kids:0,ops:0,read:0,write:0}
-var grand1acces={ifs:0,assigns:0,reprats:0,kids:0,ops:0,read:0,write:0}
+var globalacces={ifs:0,assigns:0,repeats:0,kids:0,ops:0,read:0,write:0}
+var grand1acces={ifs:0,assigns:0,repeats:0,kids:0,ops:0,read:0,write:0}
 // Reset Every Thing on load
 window.onload=function(){infile.value="";fakeinfile.value="";};
 
